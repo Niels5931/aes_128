@@ -1,6 +1,7 @@
-#!./_env/bin/python3
-from os import mkdir, chdir, getcwd, listdir, getenv, environ
+#!./_envtest/bin/python3
+from os import mkdir, chdir, getcwd, listdir, getenv, environ, makedirs
 from sys import argv
+from subprocess import run
 import argparse
 from scripts.python.remove_project import rm_dir
 from scripts.python.file_parser import hdlFileParser
@@ -11,6 +12,7 @@ def main():
     argparser.add_argument("project_name", help="Name of the project")
     argparser.add_argument("-d", "--dependencies", nargs='+', help="List of dependencies")
     argparser.add_argument("-t", help="File extension for the top-level file", default=".sv")
+    argparser.add_argument("-x","--external", dest="external", type=str, help="Git repo names. Will clone submodules from github.com/Niels5931/<git_repo>")
     args = argparser.parse_args()
     
     if "cores" not in listdir(getcwd()):
@@ -34,6 +36,20 @@ def main():
             f.write(f"dependencies:\n")
             for dep in args.dependencies:
                 f.write(f"- ../{dep}/{dep}.yml\n")
+        if args.external:
+            if not args.dependencies:
+                f.write(f"dependencies:\n")
+            chdir(getenv("PROJECT_ROOT"))
+            makedirs("external", exist_ok=True)
+            chdir("external")
+            for repo in args.external.split(","):
+                if repo in listdir(getcwd()):
+                    continue
+                run(f"git clone https://github.com/Niels5931/{repo}.git", shell=True)
+            chdir(getenv("PROJECT_ROOT"))
+            for repo in args.external.split(","):
+                f.write(f"- ../../external/{repo}/cores/{repo}/{repo}.yml\n")
+            chdir(f"{project_root}/cores/{project_name}")
         f.write("\n")
         f.write(f"files:\n- hdl/{project_name}{args.t}\n")
     # Create the project subdirectories
