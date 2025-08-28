@@ -2,6 +2,13 @@ TARGET?=$(PROJECT_NAME)
 
 SHELL := /bin/bash
 
+setup:
+	echo "Setting up environment for project $(basename "$(PWD)")"
+	python3 -m venv _test/
+	source _test/bin/activate && \
+	pip install --upgrade pip && \
+	pip install cocotb pyuvm pytest
+
 sim:
 	echo "Running simulation of $(TARGET)"
 	cd cores/$(TARGET)/sim && simpl xsim
