@@ -4,6 +4,7 @@ SHELL := /bin/bash
 
 setup:
 	echo "Setting up environment for project $(basename "$(PWD)")"
+	echo "source $(PWD)/$(VENV_NAME)/bin/activate" >> source_simpl
 	python3 -m venv $(VENV_NAME)/
 	source $(VENV_NAME)/bin/activate && \
 	pip install --upgrade pip && \
