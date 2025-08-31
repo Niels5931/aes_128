@@ -1,4 +1,4 @@
-#!./_envtest/bin/python3
+#!/usr/bin/env python3
 from os import mkdir, chdir, getcwd, listdir, getenv, environ, makedirs
 from sys import argv
 from subprocess import run

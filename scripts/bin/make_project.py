@@ -1,4 +1,4 @@
-#!./_env/bin/python3
+#!/usr/bin/env python3
 
 from os import chdir, listdir, getcwd, getenv
 from sys import argv
