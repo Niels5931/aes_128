@@ -1,4 +1,4 @@
-#!./_envtest/bin/python3
+#!/usr/bin/env python3
 from os import mkdir, chdir, getcwd, listdir, getenv, environ, makedirs
 from sys import argv
 from subprocess import run
@@ -7,7 +7,7 @@ from scripts.python.remove_project import rm_dir
 from scripts.python.file_parser import hdlFileParser
 
 def main():
-    
+  
     argparser = argparse.ArgumentParser(description="Create a new project template")
     argparser.add_argument("project_name", help="Name of the project")
     argparser.add_argument("-d", "--dependencies", nargs='+', help="List of dependencies")
@@ -65,7 +65,7 @@ def main():
         environ["PROJECT_NAME"] = project_name
         hdlFileParser.parse_deps_from_config(f"{getcwd()}/")
 
-    print(hdlFileParser.topHdlFiles)
+    #print(hdlFileParser.topHdlFiles)
 
 if __name__ == '__main__':
     main()
