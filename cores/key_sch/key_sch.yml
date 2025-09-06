@@ -1,0 +1,7 @@
+#%SimplAPI=1.0
+
+name: key_sch
+
+files:
+- hdl/key_sch.sv
+- hdl/subbyte.sv
